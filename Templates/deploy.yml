@@ -4,7 +4,7 @@ parameters:
   appName: 'WebAppNameDev'
   stageName: 'Dev'
   dependsOn: Build
-  condition: 'true'
+  condition: true
 
 stages:
 - stage: '${{ parameters.stageName }}'
@@ -28,5 +28,5 @@ stages:
                 displayName: 'Azure App Service deploy: website'
                 inputs:
                   azureSubscription: 'Resource Manager - Tailspin - Space Game'
-                  appName: '${{ parameters.appName }}'
+                  appName: '$(${{ parameters.appName }})'
                   package: '$(Pipeline.Workspace)/drop/${{ parameters.buildConfiguration }}/*.zip'
