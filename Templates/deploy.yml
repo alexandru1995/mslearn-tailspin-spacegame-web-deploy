@@ -7,15 +7,15 @@ parameters:
   condition: 'true'
 
 stages:
-- stage: '${{ stageName }}'
-  displayName: 'Deploy to the ${{ environment }} environment'
-  dependsOn: ${{ dependsOn }}
-  condition: ${{ condition }}
+- stage: '${{ parameters.stageName }}'
+  displayName: 'Deploy to the ${{ parameters.environment }} environment'
+  dependsOn: ${{ parameters.dependsOn }}
+  condition: ${{ parameters.condition }}
   jobs:
     - deployment: Deploy
       pool:
         vmImage: 'ubuntu-16.04'
-      environment: ${{ environment }}
+      environment: ${{ parameters.environment }}
       variables:
         - group: 'Release'
       strategy:
@@ -29,4 +29,4 @@ stages:
                 inputs:
                   azureSubscription: 'Resource Manager - Tailspin - Space Game'
                   appName: '${{ appName }}'
-                  package: '$(Pipeline.Workspace)/drop/${{ buildConfiguration }}/*.zip'
+                  package: '$(Pipeline.Workspace)/drop/${{ parameters.buildConfiguration }}/*.zip'
